@@ -1,6 +1,24 @@
 ﻿#!/bin/bash
 
-HOME_SCRIPTS='/home/linuxmint/git/AluraCursoShellScrip/scripts'; export HOME_SCRIPTS
-HOME_IMAGES='/home/linuxmint/git/AluraCursoShellScrip/imagens-livros'; export HOME_IMAGES
+#Funcao de Convereter Imagem
+convert_image(){
+cd ~/git/AluraCursoShellScrip/imagens-livross
+if [ ! -d png ]
+then
+mkdir png
+fi
 
-convert $HOME_IMAGES/$1.jpg $HOME_IMAGES/$1.png
+for imagem in *.jpg
+	do
+		local imagem_semex=$(ls $imagem | awk -F. '{print $1}')
+		convert $imagem_semex.jpg png/$imagem_semex.png
+done
+}
+
+convert_image 2>logs/erros.log
+if [ $? -eq 0 ]
+then
+	echo "Convercao Realizada com Sucesso!"
+else
+	echo "Houve uma falha na Convercao!"
+fi
